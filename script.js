@@ -55,7 +55,7 @@ const gameController = (() => {
 
     const checkWinner = (player) => {
         gameBoard.boards.winningBoards.forEach((e) => {
-            if (gameBoard.boards.playedBoard[e[0]] === activePlayer.mark && gameBoard.boards.playedBoard[e[1]] === player.mark && gameBoard.boards.playedBoard[e[2]] === player.mark) {
+            if (gameBoard.boards.playedBoard[e[0]] === player.mark && gameBoard.boards.playedBoard[e[1]] === player.mark && gameBoard.boards.playedBoard[e[2]] === player.mark) {
                 console.log(`winner is ${player.name}`);
                 winnerDeclared = true;
             }
@@ -77,7 +77,24 @@ const gameController = (() => {
     return { changeActivePlayer, gameTurn };
 })();
 
-
-
+//*settings and buttons module 
+const interface = (() => {
+    const mainscreen = document.querySelector('.mainscreen');
+    const squares = document.querySelector('.gameboard');
+    const squaresInfo = document.querySelector('.gameboard-info');
+    const settingsscreen = document.querySelector('.settingsscreen');
+    const playGameBtn = document.querySelector('#playgame');
+    const settingsBtn = document.querySelector('#settings');
+    playGameBtn.addEventListener('click', () => {
+        mainscreen.classList.toggle('hideleft');
+        squares.classList.toggle('showleft');
+        squaresInfo.classList.toggle('showleft');
+    });
+    settingsBtn.addEventListener('click', () => {
+        mainscreen.classList.toggle('hideright');
+        settingsscreen.classList.toggle('showright');
+    });
+    return {}
+})();
 
 

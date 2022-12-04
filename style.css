@@ -16,118 +16,200 @@
     }
   }
 
+@-webkit-keyframes slideoutleft {
+    0% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+    100% {
+        transform: translate(-200%, 0);
+        opacity:0;
+    }
+}
+
+@keyframes slideoutleft {
+    0% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+    100% {
+        transform: translate(-200%, 0);
+        opacity:0;
+    }
+}
+
+@-webkit-keyframes slideinleft {
+    0% {
+        transform: translate(200%, 0);
+        opacity:0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+}
+
+@keyframes slideinleft {
+    0% {
+        transform: translate(200%, 0);
+        opacity:0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+}
+@-webkit-keyframes slideoutright {
+    0% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+    100% {
+        transform: translate(200%, 0);
+        opacity:0;
+    }
+}
+@keyframes slideoutright {
+    0% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+    100% {
+        transform: translate(200%, 0);
+        opacity:0;
+    }
+}
+
+@-webkit-keyframes slideinright {
+    0% {
+        transform: translate(0, 0);
+        opacity:0;
+    }
+    100% {
+        transform: translate(10%, 0);
+        opacity:1;
+    }
+}
+
+@keyframes slideinright {
+    0% {
+        transform: translate(-200%, 0);
+        opacity:0;
+    }
+    100% {
+        transform: translate(0, 0);
+        opacity:1;
+    }
+}
   @font-face {
     font-family: 'LEMON MILK';
+    font-style: normal;
+    font-weight: normal;
     src: local('LEMON MILK Regular'), local('LEMONMILK-Regular'),
         url('fonts/LEMONMILK-Regular.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: italic;
+    font-weight: 500;
     src: local('LEMON MILK Medium Italic'), local('LEMONMILK-MediumItalic'),
         url('fonts/LEMONMILK-MediumItalic.woff2') format('woff2');
-    font-weight: 500;
-    font-style: italic;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: italic;
+    font-weight: normal;
     src: local('LEMON MILK Regular Italic'), local('LEMONMILK-RegularItalic'),
         url('fonts/LEMONMILK-RegularItalic.woff2') format('woff2');
-    font-weight: normal;
-    font-style: italic;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: normal;
+    font-weight: 300;
     src: local('LEMON MILK Light'), local('LEMONMILK-Light'),
         url('fonts/LEMONMILK-Light.woff2') format('woff2');
-    font-weight: 300;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: normal;
+    font-weight: bold;
     src: local('LEMON MILK Bold'), local('LEMONMILK-Bold'),
         url('fonts/LEMONMILK-Bold.woff2') format('woff2');
-    font-weight: bold;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: italic;
+    font-weight: bold;
     src: local('LEMON MILK Bold Italic'), local('LEMONMILK-BoldItalic'),
         url('fonts/LEMONMILK-BoldItalic.woff2') format('woff2');
-    font-weight: bold;
-    font-style: italic;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: italic;
+    font-weight: 300;
     src: local('LEMON MILK Light Italic'), local('LEMONMILK-LightItalic'),
         url('fonts/LEMONMILK-LightItalic.woff2') format('woff2');
-    font-weight: 300;
-    font-style: italic;
 }
 
 @font-face {
     font-family: 'LEMON MILK';
+    font-style: normal;
+    font-weight: 500;
     src: local('LEMON MILK Medium'), local('LEMONMILK-Medium'),
         url('fonts/LEMONMILK-Medium.woff2') format('woff2');
-    font-weight: 500;
-    font-style: normal;
 }
 
 @font-face {
     font-family: 'saxMono';
+    font-style: normal;
+    font-weight: normal;
     src: local('saxMono'),
         url('fonts/saxMono.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
 }
 
 
 
 body, html {
-    box-sizing: border-box;
-    height: 100%;
-    margin: 0;
-    padding: 0;
     background: rgb(23, 1, 59);
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    overflow:hidden;
+    box-sizing: border-box;
     font-family: 'saxMono', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    height: 100%;
+    inset: 0;
+    margin: 0;
+    overflow:hidden;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
 }
 .gradient {
+    -webkit-animation: rotate var(--speed) var(--easing) alternate infinite;
+            animation: rotate var(--speed) var(--easing) alternate infinite;
+    background: linear-gradient(75deg,hwb(300 0% 29%),hsl(255, 100%, 58%));
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    -webkit-filter: blur(calc(var(--size) / 7));
+            filter: blur(calc(var(--size) / 7));
+    height: calc(var(--size));
+    width: var(--size);
     z-index: -2;
     --size: 80vh;
     --speed: 35s;
-    /* --easing: cubic-bezier(0.8, 0.2, 0.2, 0.8); */
     --easing: ease-in-out;
-    width: var(--size);
-    height: calc(var(--size));
-    -webkit-filter: blur(calc(var(--size) / 7));
-            filter: blur(calc(var(--size) / 7));
-    /* background-image: linear-gradient(hsl(158, 82, 57, 85%), hsl(252, 82, 57)); */
-    background: linear-gradient(75deg,hwb(300 0% 29%),hsl(255, 100%, 58%));
-    -webkit-animation: rotate var(--speed) var(--easing) alternate infinite;
-            animation: rotate var(--speed) var(--easing) alternate infinite;
-    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
 }
 .centerbg {
-    position: absolute;
-    inset:0;
-    display:flex;
-    justify-content: center;
     align-items: center;
+    display:flex;
+    inset:0;
+    justify-content: center;
+    position: absolute;
 }
 .gameboard {
     aspect-ratio: 1/1;
-    border:2px solid yellow;
     box-sizing: border-box;
     display: grid;
     /* display:none; */
@@ -135,13 +217,22 @@ body, html {
     grid-row: 3/8;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    width: clamp(300px, 60%, 600px);
+    width: clamp(300px, 65%, 500px);
     z-index: 6;
+    gap: 3px;
+    transform: translateX(200%);
 }
-
+.gameboard-info {
+    transform: translateX(200%);
+    grid-column: 3/11;
+    grid-row: 8/9;
+    width: 100%;
+    text-align: center;
+}
 .cell {
     align-items: center;
-    border:1px solid red;
+    border:3px solid rgb(84, 6, 120);
+    border-radius: 4px;
     box-sizing: border-box;
     display: flex;
     font-family: 'Courier New', Courier, monospace;
@@ -160,20 +251,20 @@ body, html {
 }
 
 h1{
-    text-align: center;
-    z-index: 5;
     font-family: 'LEMON MILK', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: clamp(2rem,8vw,5rem);
+    text-align: center;
+    z-index: 5;
 }
 
 .wrapper {
-    z-index: 5;
     align-items: center;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: repeat(9, 1fr);
     height: 100%;
     justify-items: center;
+    z-index: 5;
 }
 
 header {
@@ -186,23 +277,52 @@ footer {
     grid-row: -1/-2;
 }
 
-.mainscreen {
+.mainscreen, .settingsscreen {
+    position: absolute;
+    /* display:none; */
     grid-column: 3/11;
     grid-row: 3/8;
-    display:none;
+    z-index: 4;
+    width: 100%;
 }
   
   * {
     transition: all 0.25s ease-out;
   }
   .mainmenu {
+    align-items: center;
     display:flex;
     flex-direction: column;
-    align-items: center;
+    font-size: clamp(1rem,4vw,3rem);
+    gap: 1rem;
     justify-content: center;
     list-style: none;
-    font-size: clamp(1rem,4vw,3rem);
     margin: 0;
     padding: 0;
-    gap: 1rem;
+  }
+
+  .hideleft {
+    -webkit-animation: slideoutleft 1s linear forwards;
+            animation: slideoutleft 1s linear forwards;
+  }
+  .showleft {
+    -webkit-animation: slideinleft 1s linear forwards;
+            animation: slideinleft 1s linear forwards;
+  }
+  .hideright {
+    -webkit-animation: slideoutright 1s linear forwards;
+            animation: slideoutright 1s linear forwards;
+  }
+  .showright {
+    -webkit-animation: slideinright 1s linear forwards;
+            animation: slideinright 1s linear forwards;
+  }
+
+  .hidden {
+    visibility: hidden;
+  }
+
+  .settingsscreen {
+    text-align: center;
+    transform:translateX(-200%);
   }
