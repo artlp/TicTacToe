@@ -1,0 +1,21 @@
+.gameboard {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: max(300px, 80%);
+    border:2px solid yellow;
+    aspect-ratio: 1/1;
+}
+
+.cell {
+    box-sizing: border-box;
+    border:1px solid red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 7rem;
+    font-weight: 900;
+    font-family: 'Courier New', Courier, monospace;
+    min-height: 5rem;
+}
