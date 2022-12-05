@@ -14,14 +14,16 @@
         <header><h1><span id="tic">TIC</span><span class="dash">-</span><span id="tac">TAC</span><span class="dash">-</span><span id="toe">TOE</span></h1></header>
         <section class="mainscreen">
             <ul class="mainmenu">
-                <li id="playgame">PLAY GAME</li>
-                <li id="settings">SETTINGS</li>
+                <li id="playgame" class="btn">PLAY GAME</li>
+                <li id="settings" class="btn">SETTINGS</li>
             </ul>
             
         </section>
         <footer>made by artlp</footer>
         <div class="gameboard"></div>
-        <div class="gameboard-info">SCORE BUTTON SCORE</div>
+        <div class="gameboard-info"><p>SCORE</p>
+            <button class="btn backtomain">Back to main menu</button>
+            <p>SCORE</p></div>
         
         <div class="settingsscreen">
             game mode: VS HUMAN | VS PC <br>
@@ -31,9 +33,15 @@
             Player 2 icon <br>
             Player 1 color <br>
             Player 2 color <br>
-            RESET SCORE
+            RESET SCORE <br>
+            <button class="btn settingsaccept">accept</button>
+            <button class="btn settingscancel">cancel</button>
 
-
+        </div>
+        <div class="endgame hidden">
+            <div class="win hidden">Player won</div>
+            <div class="lose hidden">Player lost</div>
+            <div class="draw hidden">It's a draw</div>
         </div>
     </div>
     <div class="centerbg">
