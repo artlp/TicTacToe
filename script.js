@@ -53,8 +53,10 @@ const gameController = (() => {
     const winScreen = document.querySelector('.win');
     const loseScreen = document.querySelector('.lose');
     const drawScreen = document.querySelector('.draw');
+    const message = document.querySelector('#message');
     const changeActivePlayer = () => {
         activePlayer === player1 ? activePlayer = player2 : activePlayer = player1;
+        message.innerText = `${activePlayer.name}, it's your turn`;
     };
 
     const checkWinner = (player) => {
@@ -81,7 +83,7 @@ const gameController = (() => {
             changeActivePlayer();
         }
     };
-    return { changeActivePlayer, gameTurn };
+    return { changeActivePlayer, gameTurn, endScreen, winScreen, loseScreen, drawScreen };
 })();
 
 //*settings and buttons module 
@@ -133,6 +135,10 @@ const interface = (() => {
     });
 
     function defaultClasses() {
+        gameController.endScreen.className = "endgame hidden";
+        gameController.winScreen.className = "win hidden";
+        gameController.loseScreen.className = "lose hidden";
+        gameController.drawScreen.className = "draw hidden";
         setTimeout(() => {
             squares.className = "gameboard";
             squaresInfo.className = "gameboard-info";

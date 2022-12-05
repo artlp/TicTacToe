@@ -1,52 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TicTacToe by artlp</title>
-    <link rel="stylesheet" href="./normalize.css">
-    <link rel="stylesheet" href="./style.css">
-    <script src="./script.js" defer></script>
-</head>
-<body>
-    <div class="wrapper">
-        <header><h1><span id="tic">TIC</span><span class="dash">-</span><span id="tac">TAC</span><span class="dash">-</span><span id="toe">TOE</span></h1></header>
-        <section class="mainscreen">
-            <ul class="mainmenu">
-                <li id="playgame" class="btn">PLAY GAME</li>
-                <li id="settings" class="btn">SETTINGS</li>
-            </ul>
-            
-        </section>
-        <footer>made by artlp</footer>
-        <div class="gameboard"></div>
-        <div class="gameboard-info"><p>SCORE</p>
-            <button class="btn backtomain">Back to main menu</button>
-            <p>SCORE</p></div>
-        
-        <div class="settingsscreen">
-            game mode: VS HUMAN | VS PC <br>
-            Player 1 name <br>
-            Player 2 name <br>
-            Player 1 icon <br>
-            Player 2 icon <br>
-            Player 1 color <br>
-            Player 2 color <br>
-            RESET SCORE <br>
-            <button class="btn settingsaccept">accept</button>
-            <button class="btn settingscancel">cancel</button>
 
-        </div>
-        <div class="endgame hidden">
-            <div class="win hidden">Player won</div>
-            <div class="lose hidden">Player lost</div>
-            <div class="draw hidden">It's a draw</div>
-        </div>
-    </div>
-    <div class="centerbg">
-        <div class="gradient"></div>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>TicTacToe by artlp</title>
+        <link rel="stylesheet" href="./normalize.css">
+        <link rel="stylesheet" href="./style.css">
+        <script src="./script.js" defer></script>
+    </head>
 
-</body>
+    <body>
+        <div class="wrapper">
+            <header>
+                <h1><span id="tic">TIC</span><span class="dash">-</span><span id="tac">TAC</span><span
+                        class="dash">-</span><span id="toe">TOE</span></h1>
+            </header>
+            <section class="mainscreen">
+                <ul class="mainmenu">
+                    <li id="playgame" class="btn">PLAY GAME</li>
+                    <li id="settings" class="btn">SETTINGS</li>
+                </ul>
+
+            </section>
+            <footer>made by artlp</footer>
+            <div class="gameboard">
+                <div id="message"></div>
+            </div>
+            <div class="gameboard-info">
+                <p>SCORE</p>
+                <button class="btn backtomain">Back to main menu</button>
+                <p>SCORE</p>
+            </div>
+
+            <div class="settingsscreen">
+                <div class="flexdiv">Opponent (CPU game mode coming later):
+
+                    <label class="toggle">
+                        <input type="checkbox" disabled>
+                        <span class="slider"></span>
+                        <span class="labels" data-on="CPU" data-off="HUMAN"></span>
+                    </label>
+
+                </div>
+                <div class="flexdiv2">
+                    <div class="flexdiv"><fieldset><label for="player1name">Player 1 Name</label><input type="text" name="player1name" id="player1name"></fieldset></div>
+                    <div class="flexdiv"><fieldset><label for="player2name">Player 2 Name</label><input type="text" name="player2name" id="player2name"></fieldset></div>
+                </div>
+                <div class="flexdiv2">
+                    <div class="flexdiv"><fieldset><label for="player1icon">Player 1 Icon</label><input type="text" name="player1icon" id="player1icon"></fieldset></div>
+                    <div class="flexdiv"><fieldset><label for="player2icon">Player 2 Icon</label><input type="text" name="player2icon" id="player2icon"></fieldset></div>
+                </div>
+                <div class="flexdiv2">
+                    <div class="flexdiv"><fieldset><label for="player1color">Player 1 Color</label><input type="text" name="player1color" id="player1color"></fieldset></div>
+                    <div class="flexdiv"><fieldset><label for="player2color">Player 2 Color</label><input type="text" name="player2color" id="player2color"></fieldset></div>
+                </div>
+                <div class="flexdiv2"><button class="btn resetscore">Reset Score</button></div>
+                <div class="flexdiv2"><button class="btn settingsaccept">Accept</button>
+                <button class="btn settingscancel">Cancel</button></div>
+
+            </div>
+            <div class="endgame hidden">
+                <div class="win hidden">Player won</div>
+                <div class="lose hidden">Player lost</div>
+                <div class="draw hidden">It's a draw</div>
+            </div>
+        </div>
+        <div class="centerbg">
+            <div class="gradient"></div>
+        </div>
+    </body>
+
 </html>
