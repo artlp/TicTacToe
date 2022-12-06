@@ -13,6 +13,22 @@ const gameBoard = (() => {
             [2, 4, 6],
         ]
     };
+    const colors = {
+        black: "hsl(0, 80%, 0%)",
+        white: "hsl(0, 100%, 100%)",
+        red: "hsl(1, 77%, 55%)",
+        blue: "hsl(200, 97%, 45%)",
+        yellow: "hsl(65, 100%, 63%)",
+        green: "hsl(88, 100%, 67%)",
+        orange: "hsl(36, 100%, 50%)",
+    };
+    const markers = {
+        cross: "⤫",
+        circle: "●",
+        star: "★",
+        heart: "🎔",
+        note: "♪",
+    };
     const drawGameBoard = () => {
         const board = document.querySelector('.gameboard');
         for (let i = 0; i < 9; i++) {
@@ -27,20 +43,22 @@ const gameBoard = (() => {
     };
     drawGameBoard();
     const gameCells = document.querySelectorAll('.cell');
-    return { boards, drawGameBoard, gameCells };
+    return { boards, drawGameBoard, gameCells, colors, markers };
 })();
 
 
-const Player = (name, mark) => {
+const Player = (name, marker, color) => {
     const turn = id => {
-        gameBoard.gameCells[id].innerText = mark;
+        gameBoard.gameCells[id].style.color = color;
+        // gameBoard.gameCells[id].style.backgroundColor = color;
         gameBoard.gameCells[id].classList.add('clicked');
-        gameBoard.boards.playedBoard[id] = mark;
+        gameBoard.gameCells[id].innerText = marker;
+        gameBoard.boards.playedBoard[id] = marker;
     };
-    return { name, mark, turn };
+    return { name, marker, color, turn };
 };
-const player1 = Player('Player 1', "X");
-const player2 = Player('Player 2', "O");
+const player1 = Player('Player 1', gameBoard.markers.cross, gameBoard.colors.black);
+const player2 = Player('Player 2', gameBoard.markers.circle, gameBoard.colors.white);
 
 
 //* game module
@@ -61,10 +79,10 @@ const gameController = (() => {
 
     const checkWinner = (player) => {
         gameBoard.boards.winningBoards.forEach((e) => {
-            if (gameBoard.boards.playedBoard[e[0]] === player.mark && gameBoard.boards.playedBoard[e[1]] === player.mark && gameBoard.boards.playedBoard[e[2]] === player.mark) {
+            if (gameBoard.boards.playedBoard[e[0]] === player.marker && gameBoard.boards.playedBoard[e[1]] === player.marker && gameBoard.boards.playedBoard[e[2]] === player.marker) {
                 endScreen.classList.remove('hidden');
                 winScreen.classList.remove('hidden');
-                winScreen.innerText= `winner is ${player.name}`;
+                winScreen.innerText = `winner is ${player.name}`;
                 winnerDeclared = true;
             }
         });
@@ -146,7 +164,41 @@ const interface = (() => {
             settingsscreen.className = "settingsscreen";
         }, 720);
     }
-    return {};
+
+    const marker1Div = document.querySelector('#player1marker');
+    const marker2Div = document.querySelector('#player2markers fieldset > div');
+
+    let markersArray = Object.values(gameBoard.markers);
+    for (const mark of markersArray) {
+        const marker = document.createElement('div');
+        marker.innerText = mark;
+        marker.setAttribute("data-mark", mark);
+
+        marker.classList.add("settingsmarker");
+        marker1Div.append(marker);
+    }
+    let p2Marks = marker1Div.cloneNode(true);
+    p2Marks.setAttribute("id", "player2marker");
+    marker2Div.append(p2Marks);
+
+
+    const color1Div = document.querySelector('#player1color');
+    const color2Div = document.querySelector('#player2colors fieldset > div');
+
+    for (const [key, value] of Object.entries(gameBoard.colors)) {
+        console.log(key)
+        const color = document.createElement('div');
+        color.innerText = "";
+        color.style.backgroundColor = value;
+        color.setAttribute("data-mark", key)
+        color.classList.add("settingscolor");
+        color1Div.append(color);
+    }
+    let p2Colors = color1Div.cloneNode(true);
+    p2Colors.setAttribute("id", "player2color");
+    color2Div.append(p2Colors);
+
+    return { marker1Div };
 })();
 
 

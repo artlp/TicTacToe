@@ -49,12 +49,19 @@
                     <div class="flexdiv"><fieldset><label for="player2name">Player 2 Name</label><input type="text" name="player2name" id="player2name"></fieldset></div>
                 </div>
                 <div class="flexdiv2">
-                    <div class="flexdiv"><fieldset><label for="player1icon">Player 1 Icon</label><input type="text" name="player1icon" id="player1icon"></fieldset></div>
-                    <div class="flexdiv"><fieldset><label for="player2icon">Player 2 Icon</label><input type="text" name="player2icon" id="player2icon"></fieldset></div>
+                    <div class="flexdiv"><fieldset><label for="player1marker">Player 1 Marker</label>
+                        <div id="player1marker" class="markerdiv"></div>
+                    </fieldset>
+                    </div>
+                    <div class="flexdiv" id="player2markers"><fieldset><label for="player2marker">Player 2 Marker</label>
+                        <div id="player2marker" class="markerdiv"></div>
+
+                        <!-- <input type="text" name="player2marker" id="player2marker"> -->
+                    </fieldset></div>
                 </div>
                 <div class="flexdiv2">
-                    <div class="flexdiv"><fieldset><label for="player1color">Player 1 Color</label><input type="text" name="player1color" id="player1color"></fieldset></div>
-                    <div class="flexdiv"><fieldset><label for="player2color">Player 2 Color</label><input type="text" name="player2color" id="player2color"></fieldset></div>
+                    <div class="flexdiv"><fieldset><label for="player1color">Player 1 Color</label><div id="player1color" class="colordiv"></div></fieldset></div>
+                    <div class="flexdiv" id="player2colors"><fieldset><label for="player2color">Player 2 Color</label> <div id="player2color" class="colordiv"></div></fieldset></div>
                 </div>
                 <div class="flexdiv2"><button class="btn resetscore">Reset Score</button></div>
                 <div class="flexdiv2"><button class="btn settingsaccept">Accept</button>
@@ -67,9 +74,9 @@
                 <div class="draw hidden">It's a draw</div>
             </div>
         </div>
-        <div class="centerbg">
+        <!-- <div class="centerbg">
             <div class="gradient"></div>
-        </div>
+        </div> -->
     </body>
 
 </html>
