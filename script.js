@@ -46,24 +46,27 @@ const gameBoard = (() => {
     return { boards, drawGameBoard, gameCells, colors, markers };
 })();
 
-
-const Player = (name, marker, color) => {
-    const turn = id => {
-        gameBoard.gameCells[id].style.color = color;
-        gameBoard.gameCells[id].classList.add('clicked');
-        gameBoard.gameCells[id].innerText = marker;
-        gameBoard.boards.playedBoard[id] = marker;
+//* players module
+const Players = (() => {
+    let p1Color = '';
+    let p2Color = '';
+    const Player = (name, marker, color) => {
+        const turn = id => {
+            gameBoard.gameCells[id].style.color = color;
+            gameBoard.gameCells[id].classList.add('clicked');
+            gameBoard.gameCells[id].innerText = marker;
+            gameBoard.boards.playedBoard[id] = marker;
+        };
+        return { name, marker, color, turn };
     };
-    return { name, marker, color, turn };
-};
-const player1 = Player('Player 1', gameBoard.markers.cross, gameBoard.colors.black);
-const player2 = Player('Player 2', gameBoard.markers.circle, gameBoard.colors.white);
-message.innerText = `${player1.name}, it's your turn`;
-
-
+    const player1 = Player('Player 1', gameBoard.markers.cross, gameBoard.colors.blue);
+    const player2 = Player('Player 2', gameBoard.markers.circle, gameBoard.colors.red);
+    return { Player, player1, player2, p1Color, p2Color };
+})();
+//! message.innerText = `${Players.player1.name}, it's your turn`;
 //* game module
 const gameController = (() => {
-    let activePlayer = player1;
+    let activePlayer = Players.player1;
     const gameMode = ["vs", "ai"];
     let winnerDeclared = false;
     let remainingSpots = 9;
@@ -73,7 +76,7 @@ const gameController = (() => {
     const drawScreen = document.querySelector('.draw');
     const message = document.querySelector('#message');
     const changeActivePlayer = () => {
-        activePlayer === player1 ? activePlayer = player2 : activePlayer = player1;
+        activePlayer === Players.player1 ? activePlayer = Players.player2 : activePlayer = Players.player1;
         message.innerText = `${activePlayer.name}, it's your turn`;
     };
 
@@ -105,7 +108,7 @@ const gameController = (() => {
 })();
 
 //*settings and buttons module 
-const interface = (() => {
+const Interface = (() => {
     const mainscreen = document.querySelector('.mainscreen');
     const squares = document.querySelector('.gameboard');
     const squaresInfo = document.querySelector('.gameboard-info');
@@ -119,8 +122,8 @@ const interface = (() => {
     const p2Name = document.querySelector('#player2name');
     const p1Marker = document.querySelector('#player1marker');
     const p2Marker = document.querySelector('#player2marker');
-    const p1Color = document.querySelector('#player1color');
-    const p2Color = document.querySelector('#player2color');
+    // let p1Color = '';
+    // let p2Color = '';
 
     playGameBtn.addEventListener('click', () => {
         mainscreen.classList.toggle('hideleft');
@@ -139,10 +142,8 @@ const interface = (() => {
         settingsscreen.classList.remove('showright');
         settingsscreen.classList.add('hideleft');
         defaultClasses();
-        p1Name.value ? player1.name = p1Name.value : player1.name = "Player 1";
-        p2Name.value ? player2.name = p2Name.value : player2.name = "Player 2";
-        // player1.name = p1Name.value;
-        // player2.name = p2Name.value;
+        p1Name.value ? Players.player1.name = p1Name.value : Players.player1.name = "Player 1";
+        p2Name.value ? Players.player2.name = p2Name.value : Players.player2.name = "Player 2";
     });
     settingsCancel.addEventListener('click', () => {
         mainscreen.classList.remove('hideright');
@@ -197,7 +198,7 @@ const interface = (() => {
         const color = document.createElement('div');
         color.innerText = "";
         color.style.backgroundColor = value;
-        color.setAttribute("data-color", key);
+        color.setAttribute("data-color", value);
         color.classList.add("settingscolor");
         color1Div.append(color);
     }
@@ -205,11 +206,11 @@ const interface = (() => {
     p2Colors.setAttribute("id", "player2color");
     color2Div.append(p2Colors);
 
-    color1Div.childNodes.forEach((e,i,ar) => {
+    color1Div.childNodes.forEach((e, i, ar) => {
         e.addEventListener('click', () => {
-            console.log(e.dataset.color, player1.color);
-            player1.color = e.dataset.color;
-        })});
+            Players.player1.color = e.dataset.color;
+        });
+    });
 
     return { marker1Div, color1Div, color2Div };
 })();
