@@ -50,7 +50,6 @@ const gameBoard = (() => {
 const Player = (name, marker, color) => {
     const turn = id => {
         gameBoard.gameCells[id].style.color = color;
-        // gameBoard.gameCells[id].style.backgroundColor = color;
         gameBoard.gameCells[id].classList.add('clicked');
         gameBoard.gameCells[id].innerText = marker;
         gameBoard.boards.playedBoard[id] = marker;
@@ -59,6 +58,7 @@ const Player = (name, marker, color) => {
 };
 const player1 = Player('Player 1', gameBoard.markers.cross, gameBoard.colors.black);
 const player2 = Player('Player 2', gameBoard.markers.circle, gameBoard.colors.white);
+message.innerText = `${player1.name}, it's your turn`;
 
 
 //* game module
@@ -115,6 +115,12 @@ const interface = (() => {
     const settingsAccept = document.querySelector('.settingsaccept');
     const settingsCancel = document.querySelector('.settingscancel');
     const settingsBtn = document.querySelector('#settings');
+    const p1Name = document.querySelector('#player1name');
+    const p2Name = document.querySelector('#player2name');
+    const p1Marker = document.querySelector('#player1marker');
+    const p2Marker = document.querySelector('#player2marker');
+    const p1Color = document.querySelector('#player1color');
+    const p2Color = document.querySelector('#player2color');
 
     playGameBtn.addEventListener('click', () => {
         mainscreen.classList.toggle('hideleft');
@@ -133,7 +139,10 @@ const interface = (() => {
         settingsscreen.classList.remove('showright');
         settingsscreen.classList.add('hideleft');
         defaultClasses();
-
+        p1Name.value ? player1.name = p1Name.value : player1.name = "Player 1";
+        p2Name.value ? player2.name = p2Name.value : player2.name = "Player 2";
+        // player1.name = p1Name.value;
+        // player2.name = p2Name.value;
     });
     settingsCancel.addEventListener('click', () => {
         mainscreen.classList.remove('hideright');
@@ -173,7 +182,6 @@ const interface = (() => {
         const marker = document.createElement('div');
         marker.innerText = mark;
         marker.setAttribute("data-mark", mark);
-
         marker.classList.add("settingsmarker");
         marker1Div.append(marker);
     }
@@ -186,11 +194,10 @@ const interface = (() => {
     const color2Div = document.querySelector('#player2colors fieldset > div');
 
     for (const [key, value] of Object.entries(gameBoard.colors)) {
-        console.log(key)
         const color = document.createElement('div');
         color.innerText = "";
         color.style.backgroundColor = value;
-        color.setAttribute("data-mark", key)
+        color.setAttribute("data-color", key);
         color.classList.add("settingscolor");
         color1Div.append(color);
     }
@@ -198,7 +205,13 @@ const interface = (() => {
     p2Colors.setAttribute("id", "player2color");
     color2Div.append(p2Colors);
 
-    return { marker1Div };
+    color1Div.childNodes.forEach((e,i,ar) => {
+        e.addEventListener('click', () => {
+            console.log(e.dataset.color, player1.color);
+            player1.color = e.dataset.color;
+        })});
+
+    return { marker1Div, color1Div, color2Div };
 })();
 
 

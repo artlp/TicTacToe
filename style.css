@@ -177,7 +177,7 @@
 
 
 body, html {
-    background: rgb(23, 1, 59);
+    background: #609BDB;
     box-sizing: border-box;
     font-family: 'saxMono', 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     height: 100%;
@@ -241,7 +241,7 @@ body, html {
 }
 .cell {
     align-items: center;
-    border:3px solid rgb(84, 6, 120);
+    border:3px solid #ffffff96;
     border-radius: 4px;
     box-sizing: border-box;
     display: flex;
@@ -259,6 +259,7 @@ body, html {
 
 .clicked {
     pointer-events: none;
+    /* background: hsl(264, 72%, 68%); */
 }
 
 h1{
