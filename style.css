@@ -217,7 +217,7 @@ body, html {
     display: grid;
     gap: 3px;
     grid-column: 3/11;
-    grid-row: 3/7;
+    grid-row: 2/3;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     opacity: 0;
@@ -231,7 +231,7 @@ body, html {
     display: flex;
     flex-flow: row wrap;
     grid-column: 3/11;
-    grid-row: 8/9;
+    grid-row: 3/4;
     justify-content: space-evenly;
     text-align: center;
     transform: translateX(200%);
@@ -274,7 +274,7 @@ h1{
     align-items: center;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(9, 1fr);
+    grid-template-rows: 80px 1fr 50px;
     grid-auto-rows: -webkit-max-content;
     grid-auto-rows: max-content;
     height: 100%;
@@ -519,4 +519,8 @@ footer {
 
 label {
     margin: 0.7rem;
+}
+
+.selectedOption {
+    border: 2px solid red;
 }
