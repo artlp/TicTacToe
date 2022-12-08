@@ -19,8 +19,8 @@
             </header>
             <section class="mainscreen">
                 <ul class="mainmenu">
-                    <li id="playgame" class="btn">PLAY GAME</li>
-                    <li id="settings" class="btn">SETTINGS</li>
+                    <li id="playgame" class="btn_main">PLAY GAME</li>
+                    <li id="settings" class="btn_main">SETTINGS</li>
                 </ul>
 
             </section>
@@ -29,9 +29,9 @@
                 <div id="message"></div>
             </div>
             <div class="gameboard-info">
-                <p>SCORE</p>
+                <div class="scores">SCORE: <span id="p1score">0</span></div>
                 <button class="btn backtomain">Back to main menu</button>
-                <p>SCORE</p>
+                <div class="scores">SCORE: <span id="p2score">0</span></div>
             </div>
 
             <div class="settingsscreen">
@@ -60,14 +60,13 @@
                     <div class="flexdiv"><fieldset><label for="player1color">Player 1 Color</label><div id="player1color" class="colordiv"></div></fieldset></div>
                     <div class="flexdiv" id="player2colors"><fieldset><label for="player2color">Player 2 Color</label></fieldset></div>
                 </div>
-                <div class="flexdiv2"><button class="btn resetscore">Reset Score</button></div>
-                <div class="flexdiv2"><button class="btn settingsaccept">Accept</button></div>
+                <div class="settingsbuttons"><button class="btn resetscore">Reset Score</button><button class="btn settingsaccept">Accept</button></div>
 
             </div>
             <div class="endgame hidden">
-                <div class="win hidden">Player won</div>
-                <div class="lose hidden">Player lost</div>
-                <div class="draw hidden">It's a draw</div>
+                <div class="win hidden"><div class="endgame_message"></div><div class="endgame_button"><button class="btn nextround">PLAY ANOTHER ROUND</button></div></div>
+                <div class="lose hidden"><div class="endgame_message"></div><div class="endgame_button"> <button class="btn nextround">PLAY ANOTHER ROUND</button> </div></div>
+                <div class="draw hidden"><div class="endgame_message"></div><div class="endgame_button"><button class="btn nextround">PLAY ANOTHER ROUND</button></div></div>
             </div>
         </div>
         <!-- <div class="centerbg">
