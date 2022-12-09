@@ -36,6 +36,7 @@ const gameBoard = (() => {
 
     const drawGameBoard = () => {
         const board = document.querySelector('.gameboard');
+        board.innerHTML = `<div id="message"></div>`;
         for (let i = 0; i < 9; i++) {
             const gameCell = document.createElement('div');
             gameCell.classList.add('cell');
@@ -128,11 +129,10 @@ const gameController = (() => {
     let remainingSpots = 9;
     const endScreen = document.querySelector('.endgame');
     const winScreen = document.querySelector('.win');
-    const loseScreen = document.querySelector('.lose');
-    const drawScreen = document.querySelector('.draw');
     const p1Score = document.querySelector('#p1score');
     const p2Score = document.querySelector('#p2score');
     const message = document.querySelector('#message');
+
     const changeActivePlayer = () => {
         activePlayer === Players.player1 ? activePlayer = Players.player2 : activePlayer = Players.player1;
         message.innerText = `${activePlayer.name}, it's your turn`;
@@ -144,18 +144,18 @@ const gameController = (() => {
                 endScreen.classList.remove('hidden');
                 winScreen.classList.remove('hidden');
                 winScreen.style.backgroundColor = player.color;
-                winScreen.style.boxShadow = `0px 0 7px 8px ${player.color}`;
                 winScreen.firstChild.innerText = `The winner is 
-                ${player.name}`;
+                ${player.name}!`;
                 player.score++;
-                p1Score.innerText = `${Players.player1.score}`;
-                p2Score.innerText = `${Players.player2.score}`;
+                drawScores();
                 winnerDeclared = true;
             }
         });
         if (remainingSpots === 0 && !winnerDeclared) {
             endScreen.classList.remove('hidden');
-            drawScreen.classList.remove('hidden');
+            winScreen.style.background = `linear-gradient(180deg, ${Players.player1.color} 0%, ${Players.player2.color} 100%)`;
+            winScreen.firstChild.innerText = `It's a draw!`;
+            winScreen.classList.remove('hidden');
             winnerDeclared = true;
         };
     };
@@ -168,14 +168,22 @@ const gameController = (() => {
             changeActivePlayer();
         }
     };
+
+    const drawScores = () => {
+        p1Score.innerText = `${Players.player1.score}`;
+        p2Score.innerText = `${Players.player2.score}`;
+    }
+
     const nextRound = () => {
         gameBoard.boards.playedBoard.length = 0;
         gameBoard.boards.playedBoard.length = 9;
         gameBoard.drawGameBoard();
         gameController.remainingSpots = 9;
+        endScreen.classList.add('hidden');
+        winScreen.classList.add('hidden');
     }
 
-    return { changeActivePlayer, gameTurn, endScreen, winScreen, loseScreen, drawScreen, nextRound };
+    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound,drawScores };
 })();
 
 //*settings and buttons module 
@@ -190,6 +198,8 @@ const Interface = (() => {
     const settingsBtn = document.querySelector('#settings');
     const p1Name = document.querySelector('#player1name');
     const p2Name = document.querySelector('#player2name');
+    const resetScoreBtn = document.querySelector('.resetscore');
+    const nextRoundBtn = document.querySelector('.nextround');
     const p1Marker = document.querySelector('#player1marker');
     const p2Marker = document.querySelector('#player2marker');
 
@@ -227,11 +237,20 @@ const Interface = (() => {
         defaultClasses();
     });
 
+    nextRoundBtn.addEventListener('click', () => {
+        gameController.nextRound();
+    })
+
+    resetScoreBtn.addEventListener('click', () => {
+        gameController.winnerDeclared = false;
+        Players.player1.score = 0;
+        Players.player2.score = 0;
+        gameController.drawScores();
+    })
+
     function defaultClasses() {
         gameController.endScreen.className = "endgame hidden";
         gameController.winScreen.className = "win hidden";
-        gameController.loseScreen.className = "lose hidden";
-        gameController.drawScreen.className = "draw hidden";
         setTimeout(() => {
             squares.className = "gameboard";
             squaresInfo.className = "gameboard-info";
