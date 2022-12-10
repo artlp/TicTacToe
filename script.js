@@ -33,23 +33,39 @@ const gameBoard = (() => {
 
     const markersArray = Object.values(markers);
     const colorsArray = Object.values(colors);
+    const board = document.querySelector('.gameboard');
+    let gameCells;
+    
+    const func = function(e) {
+        gameController.gameTurn(e);
+    }
 
     const drawGameBoard = () => {
-        const board = document.querySelector('.gameboard');
-        board.innerHTML = `<div id="message"></div>`;
-        for (let i = 0; i < 9; i++) {
-            const gameCell = document.createElement('div');
-            gameCell.classList.add('cell');
-            gameCell.setAttribute('data-id', i);
-            board.appendChild(gameCell);
-        }
-        board.addEventListener('click', (e) => {
-            gameController.gameTurn(e);
-        });
+        // board.innerHTML = `<div id="message"></div>`;
+        // for (let i = 0; i < 9; i++) {
+        //     const gameCell = document.createElement('div');
+        //     gameCell.className = 'cell';
+        //     gameCell.setAttribute('data-id', i);
+        //     board.appendChild(gameCell);
+        // }
+        board.addEventListener('click', func);
+        // board.addEventListener('click', (e) => {
+            // gameController.gameTurn(e);
+        // }); //BUG added twice on next round
+        gameCells = document.querySelectorAll('.cell');
+        return {board};
     };
     drawGameBoard();
-    const gameCells = document.querySelectorAll('.cell');
-    return { boards, drawGameBoard, gameCells, colors, markers, markersArray, colorsArray };
+
+    const resetGameCells = () => {
+        gameCells.forEach(gameCell => {
+            gameCell.innerHTML = '';
+            gameCell.className = 'cell';
+            gameCell.removeAttribute('style');
+        })
+    }
+
+    return { boards, drawGameBoard, gameCells, colors, markers, markersArray, colorsArray, resetGameCells, board };
 })();
 
 //* players module
@@ -112,7 +128,6 @@ const Players = (() => {
                 gameBoard.gameCells[id].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[id].style.backgroundColor = this.color;
             }, 200);
-
         }
     }
     const player1 = new Player("Player 1", gameBoard.markersArray[0], gameBoard.colorsArray[0], 0);
@@ -143,12 +158,13 @@ const gameController = (() => {
             if (gameBoard.boards.playedBoard[e[0]] === player.marker && gameBoard.boards.playedBoard[e[1]] === player.marker && gameBoard.boards.playedBoard[e[2]] === player.marker) {
                 endScreen.classList.remove('hidden');
                 winScreen.classList.remove('hidden');
-                winScreen.style.backgroundColor = player.color;
+                winScreen.style.background = player.color;
                 winScreen.firstChild.innerText = `The winner is 
                 ${player.name}!`;
                 player.score++;
                 drawScores();
                 winnerDeclared = true;
+                changeActivePlayer();
             }
         });
         if (remainingSpots === 0 && !winnerDeclared) {
@@ -160,10 +176,11 @@ const gameController = (() => {
         };
     };
     const gameTurn = (event) => {
+        console.log(activePlayer, remainingSpots)
         if (event.target.classList.contains('cell') && !winnerDeclared) {
-            remainingSpots--;
             let id = event.target.dataset.id;
             activePlayer.turn(id);
+            --remainingSpots;
             checkWinner(activePlayer);
             changeActivePlayer();
         }
@@ -172,18 +189,22 @@ const gameController = (() => {
     const drawScores = () => {
         p1Score.innerText = `${Players.player1.score}`;
         p2Score.innerText = `${Players.player2.score}`;
-    }
+    };
 
     const nextRound = () => {
         gameBoard.boards.playedBoard.length = 0;
         gameBoard.boards.playedBoard.length = 9;
-        gameBoard.drawGameBoard();
-        gameController.remainingSpots = 9;
+        message.innerText = `${activePlayer.name}, it's your turn`;
+        winnerDeclared = false;
+        remainingSpots = 9;
         endScreen.classList.add('hidden');
         winScreen.classList.add('hidden');
-    }
+        gameBoard.resetGameCells();
+        gameBoard.drawGameBoard();
+        changeActivePlayer();
+    };
 
-    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound,drawScores };
+    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer };
 })();
 
 //*settings and buttons module 
@@ -239,14 +260,14 @@ const Interface = (() => {
 
     nextRoundBtn.addEventListener('click', () => {
         gameController.nextRound();
-    })
+    });
 
     resetScoreBtn.addEventListener('click', () => {
         gameController.winnerDeclared = false;
         Players.player1.score = 0;
         Players.player2.score = 0;
         gameController.drawScores();
-    })
+    });
 
     function defaultClasses() {
         gameController.endScreen.className = "endgame hidden";
