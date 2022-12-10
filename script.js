@@ -26,19 +26,19 @@ const gameBoard = (() => {
     const markers = {
         cross: "⤫",
         circle: "●",
-        star: "✫",
-        heart: "🎔",
-        note: "♪",
+        star: "✩",
+        heart: "♡",
+        note: "△",
     };
 
     const markersArray = Object.values(markers);
     const colorsArray = Object.values(colors);
     const board = document.querySelector('.gameboard');
     let gameCells;
-    
-    const func = function(e) {
+
+    const func = function (e) {
         gameController.gameTurn(e);
-    }
+    };
 
     const drawGameBoard = () => {
         // board.innerHTML = `<div id="message"></div>`;
@@ -50,10 +50,9 @@ const gameBoard = (() => {
         // }
         board.addEventListener('click', func);
         // board.addEventListener('click', (e) => {
-            // gameController.gameTurn(e);
+        // gameController.gameTurn(e);
         // }); //BUG added twice on next round
         gameCells = document.querySelectorAll('.cell');
-        return {board};
     };
     drawGameBoard();
 
@@ -62,8 +61,8 @@ const gameBoard = (() => {
             gameCell.innerHTML = '';
             gameCell.className = 'cell';
             gameCell.removeAttribute('style');
-        })
-    }
+        });
+    };
 
     return { boards, drawGameBoard, gameCells, colors, markers, markersArray, colorsArray, resetGameCells, board };
 })();
@@ -121,7 +120,7 @@ const Players = (() => {
             gameBoard.gameCells[id].classList.add('flip-vertical-right');
             gameBoard.boards.playedBoard[id] = this.marker;
             setTimeout(() => {
-                gameBoard.gameCells[id].innerText = this.marker;
+                gameBoard.gameCells[id].innerHTML = `<span class="marker">${this.marker}</span>`;
                 gameBoard.gameCells[id].classList.add('clicked');
                 // gameBoard.gameCells[id].style.color = this.color;
                 // gameBoard.gameCells[id].style.backgroundColor = pSBC(-0.35,this.color);
@@ -176,8 +175,7 @@ const gameController = (() => {
         };
     };
     const gameTurn = (event) => {
-        console.log(activePlayer, remainingSpots)
-        if (event.target.classList.contains('cell') && !winnerDeclared) {
+        if (event.target.classList.contains('cell') && !winnerDeclared && !event.target.classList.contains('clicked')) {
             let id = event.target.dataset.id;
             activePlayer.turn(id);
             --remainingSpots;
@@ -233,7 +231,6 @@ const Interface = (() => {
     settingsBtn.addEventListener('click', () => {
         mainscreen.classList.toggle('hideright');
         settingsscreen.classList.toggle('showright');
-
     });
     settingsAccept.addEventListener('click', () => {
         if (Players.player1.marker === Players.player2.marker) {
@@ -267,6 +264,8 @@ const Interface = (() => {
         Players.player1.score = 0;
         Players.player2.score = 0;
         gameController.drawScores();
+        gameBoard.resetGameCells();
+        gameController.nextRound();
     });
 
     function defaultClasses() {
