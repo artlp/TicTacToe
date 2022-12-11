@@ -24,7 +24,7 @@ const gameBoard = (() => {
     const markers = {
         cross: "⤫",
         circle: "●",
-        star: "✩",
+        star: "",
         heart: "♡",
         note: "△",
     };
@@ -115,12 +115,42 @@ const Players = (() => {
                 gameBoard.gameCells[id].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[id].style.backgroundColor = this.color;
             }, 200);
+        };
+
+        turnCPU() {
+
+            let validMoves = [];
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard.boards.playedBoard[i] === undefined) {
+                    validMoves.push(i)
+                }
+            }
+            let cpuCell = validMoves[Math.floor(Math.random()*validMoves.length)];
+
+            // gameBoard.boards.playedBoard.forEach((e,i,arr) => {
+            // if (!e) {
+            // validMoves.push(arr[i]);
+            console.log(validMoves);
+            // }
+            // )
+
+            gameBoard.gameCells[cpuCell].classList.add('flip-vertical-right');
+            gameBoard.boards.playedBoard[cpuCell] = this.marker;
+            setTimeout(() => {
+                gameBoard.gameCells[cpuCell].innerHTML = `<span class="marker">${this.marker}</span>`;
+                gameBoard.gameCells[cpuCell].classList.add('clicked');
+                // gameBoard.gameCells[cpuCell].style.color = this.color;
+                // gameBoard.gameCells[cpuCell].style.backgroundColor = pSBC(-0.35,this.color);
+                gameBoard.gameCells[cpuCell].style.color = pSBC(-0.55, this.color);
+                gameBoard.gameCells[cpuCell].style.backgroundColor = this.color;
+            }, 200);
         }
     }
     const player1 = new Player("Player 1", gameBoard.markersArray[0], gameBoard.colorsArray[0], 0);
     const player2 = new Player("Player 2", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
+    const cpuPlayer = new Player("CPU", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
 
-    return { Player, player1, player2 };
+    return { Player, player1, player2, cpuPlayer };
 })();
 
 //* game module
