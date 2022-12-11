@@ -14,8 +14,6 @@ const gameBoard = (() => {
         ]
     };
     const colors = {
-        // black: "#000000",
-        // white: "#FFFFFF",
         purple: "#A172E8",
         blue: "#76D4E8",
         yellow: "#F2F088",
@@ -41,17 +39,7 @@ const gameBoard = (() => {
     };
 
     const drawGameBoard = () => {
-        // board.innerHTML = `<div id="message"></div>`;
-        // for (let i = 0; i < 9; i++) {
-        //     const gameCell = document.createElement('div');
-        //     gameCell.className = 'cell';
-        //     gameCell.setAttribute('data-id', i);
-        //     board.appendChild(gameCell);
-        // }
         board.addEventListener('click', func);
-        // board.addEventListener('click', (e) => {
-        // gameController.gameTurn(e);
-        // }); //BUG added twice on next round
         gameCells = document.querySelectorAll('.cell');
     };
     drawGameBoard();
@@ -94,7 +82,7 @@ const Players = (() => {
         if (h) return "rgb" + (f ? "a(" : "(") + r + "," + g + "," + b + (f ? "," + m(a * 1000) / 1000 : "") + ")";
         else return "#" + (4294967296 + r * 16777216 + g * 65536 + b * 256 + (f ? m(a * 255) : 0)).toString(16).slice(1, f ? undefined : -2);
     };
-
+    // * changing player attributes doesn't work when players are created this way
     // const Player = (name, marker, color) => {
     //     const turn = id => {
     //         gameBoard.gameCells[id].innerText = marker;
@@ -138,13 +126,13 @@ const Players = (() => {
 //* game module
 const gameController = (() => {
     let activePlayer = Players.player1;
-    const gameMode = ["vs", "ai"];
+    let gameMode = "vs";
     let winnerDeclared = false;
     let remainingSpots = 9;
     const endScreen = document.querySelector('.endgame');
     const winScreen = document.querySelector('.win');
-    const p1Score = document.querySelector('#p1score');
-    const p2Score = document.querySelector('#p2score');
+    const p1Score = document.querySelectorAll('.scores')[0];
+    const p2Score = document.querySelectorAll('.scores')[1];
     const message = document.querySelector('#message');
 
     const changeActivePlayer = () => {
@@ -185,10 +173,9 @@ const gameController = (() => {
     };
 
     const drawScores = () => {
-        p1Score.innerText = `${Players.player1.score}`;
-        p2Score.innerText = `${Players.player2.score}`;
+        p1Score.innerHTML = `${Players.player1.name}: <span id="p1score">${Players.player1.score}</span>`;
+        p2Score.innerHTML = `${Players.player2.name}: <span id="p2score">${Players.player2.score}</span>`;
     };
-
     const nextRound = () => {
         gameBoard.boards.playedBoard.length = 0;
         gameBoard.boards.playedBoard.length = 9;
@@ -227,6 +214,7 @@ const Interface = (() => {
         squares.classList.toggle('showleft');
         squaresInfo.classList.toggle('showleft');
         message.innerText = `${Players.player1.name}, it's your turn`;
+        gameController.drawScores();
     });
     settingsBtn.addEventListener('click', () => {
         mainscreen.classList.toggle('hideright');

@@ -317,11 +317,12 @@ color: white;
 display: flex;
 flex-flow: row wrap;
 grid-column: 3/11;
-grid-row: 3/4;
+grid-row: 2/3;
 justify-content: space-evenly;
 text-align: center;
 transform: translateX(200%);
 width: 100%;
+align-self: flex-end;
 }
 
 .cell {
@@ -381,6 +382,7 @@ color: white;
 cursor: default;
 grid-column: 1/13;
 grid-row: 3/4;
+align-self: end;
 }
 
 .mainscreen, .settingsscreen {
@@ -700,6 +702,9 @@ animation: jello-vertical 0.9s ease-in-out 2200ms both;
 
 .scores span {
 display: block;
+font-weight: 1000;
+font-size: 1.5rem;
+cursor: default;
 }
 
 input[type="text"] {
