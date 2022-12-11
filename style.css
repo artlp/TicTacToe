@@ -273,6 +273,7 @@ overflow-x:hidden;
 padding: 0;
 position: absolute;
 z-index: 1;
+padding-top: 2%;
 }
 /* .gradient {
 -webkit-animation: rotate var(--speed) var(--easing) alternate infinite;
@@ -367,6 +368,7 @@ grid-template-columns: repeat(12, 1fr);
 grid-template-rows: 80px 100% 70px;
 justify-items: center;
 max-height: 100vh;
+height: 80%;
 }
 
 header {
