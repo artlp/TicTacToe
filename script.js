@@ -264,7 +264,7 @@ const Interface = (() => {
     });
     settingsAccept.addEventListener('click', () => {
         if (Players.player1.marker === Players.player2.marker) {
-            alert("error");
+            alert("Select different markers!");
         } else {
             mainscreen.classList.remove('hideright');
             mainscreen.classList.add('showleft');
@@ -275,9 +275,9 @@ const Interface = (() => {
             p2Name.value ? Players.player2.name = p2Name.value : Players.player2.name = "Player 2";
             document.querySelector('#gamemode').checked === false ? gameController.gameMode = "vs" : gameController.gameMode = "ai";
             gameBoard.resetGameCells();
+            gameController.changeActivePlayer();
             setTimeout(() => {
                 gameController.nextRound();
-
             }, 1500)
         }
     });
