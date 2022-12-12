@@ -483,8 +483,8 @@ transform-origin: bottom right;
 transition: transform 0.25s ease-out;
 width: 100%;
 }
-.btn_main:hover {
-    letter-spacing: 3px;
+footer:hover, .btn_main:hover {
+    letter-spacing: 4px;
 }
 .btn_main:hover::after {
 scale: 1.3em;
