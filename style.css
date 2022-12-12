@@ -701,7 +701,9 @@ h1 span:nth-of-type(5) {
 -webkit-animation: jello-vertical 0.9s ease-in-out 2200ms both;
 animation: jello-vertical 0.9s ease-in-out 2200ms both;
 }
-
+.scores {
+    width: 150px;
+}
 .scores span {
 display: block;
 font-weight: 1000;

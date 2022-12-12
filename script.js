@@ -24,7 +24,7 @@ const gameBoard = (() => {
     const markers = {
         cross: "⤫",
         circle: "●",
-        star: "",
+        star: "✸",
         heart: "♡",
         note: "△",
     };
@@ -162,6 +162,7 @@ const gameController = (() => {
                 turnCPU();
             }, 1000);
         }
+        console.log(remainingSpots);
     };
 
     const checkWinner = (player) => {
@@ -192,7 +193,7 @@ const gameController = (() => {
             let id = event.target.dataset.id;
             // if (gameController.gameMode === "vs") {
             activePlayer.turn(id);
-            --remainingSpots;
+            remainingSpots--;
             checkWinner(activePlayer);
             changeActivePlayer();
             cpuTurn();
@@ -204,6 +205,7 @@ const gameController = (() => {
             console.log("CPU TURN");
             setTimeout(() => {
                 Players.player2.turnCPU();
+                remainingSpots--;
             }, 600);
             setTimeout(() => {
                 checkWinner(activePlayer)
@@ -229,7 +231,7 @@ const gameController = (() => {
         cpuTurn();
     };
 
-    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer };
+    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer, remainingSpots };
 })();
 
 //*settings and buttons module 
@@ -272,6 +274,11 @@ const Interface = (() => {
             p1Name.value ? Players.player1.name = p1Name.value : Players.player1.name = "Player 1";
             p2Name.value ? Players.player2.name = p2Name.value : Players.player2.name = "Player 2";
             document.querySelector('#gamemode').checked === false ? gameController.gameMode = "vs" : gameController.gameMode = "ai";
+            gameBoard.resetGameCells();
+            setTimeout(() => {
+                gameController.nextRound();
+
+            }, 1500)
         }
     });
     btnBackToMain.addEventListener('click', () => {
