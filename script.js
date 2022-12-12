@@ -122,25 +122,16 @@ const Players = (() => {
             let validMoves = [];
             for (let i = 0; i < 9; i++) {
                 if (gameBoard.boards.playedBoard[i] === undefined) {
-                    validMoves.push(i)
+                    validMoves.push(i);
                 }
             }
-            let cpuCell = validMoves[Math.floor(Math.random()*validMoves.length)];
-
-            // gameBoard.boards.playedBoard.forEach((e,i,arr) => {
-            // if (!e) {
-            // validMoves.push(arr[i]);
+            let cpuCell = validMoves[Math.floor(Math.random() * validMoves.length)];
             console.log(validMoves);
-            // }
-            // )
-
             gameBoard.gameCells[cpuCell].classList.add('flip-vertical-right');
             gameBoard.boards.playedBoard[cpuCell] = this.marker;
             setTimeout(() => {
                 gameBoard.gameCells[cpuCell].innerHTML = `<span class="marker">${this.marker}</span>`;
                 gameBoard.gameCells[cpuCell].classList.add('clicked');
-                // gameBoard.gameCells[cpuCell].style.color = this.color;
-                // gameBoard.gameCells[cpuCell].style.backgroundColor = pSBC(-0.35,this.color);
                 gameBoard.gameCells[cpuCell].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[cpuCell].style.backgroundColor = this.color;
             }, 200);
@@ -148,9 +139,7 @@ const Players = (() => {
     }
     const player1 = new Player("Player 1", gameBoard.markersArray[0], gameBoard.colorsArray[0], 0);
     const player2 = new Player("Player 2", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
-    const cpuPlayer = new Player("CPU", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
-
-    return { Player, player1, player2, cpuPlayer };
+    return { Player, player1, player2 };
 })();
 
 //* game module
@@ -168,9 +157,15 @@ const gameController = (() => {
     const changeActivePlayer = () => {
         activePlayer === Players.player1 ? activePlayer = Players.player2 : activePlayer = Players.player1;
         message.innerText = `${activePlayer.name}, it's your turn`;
+        if (gameMode !== "vs") {
+            setTimeout(() => {
+                turnCPU();
+            }, 1000);
+        }
     };
 
     const checkWinner = (player) => {
+        console.log("starting checkwinner");
         gameBoard.boards.winningBoards.forEach((e) => {
             if (gameBoard.boards.playedBoard[e[0]] === player.marker && gameBoard.boards.playedBoard[e[1]] === player.marker && gameBoard.boards.playedBoard[e[2]] === player.marker) {
                 endScreen.classList.remove('hidden');
@@ -195,13 +190,27 @@ const gameController = (() => {
     const gameTurn = (event) => {
         if (event.target.classList.contains('cell') && !winnerDeclared && !event.target.classList.contains('clicked')) {
             let id = event.target.dataset.id;
+            // if (gameController.gameMode === "vs") {
             activePlayer.turn(id);
             --remainingSpots;
             checkWinner(activePlayer);
             changeActivePlayer();
+            cpuTurn();
+            // }
         }
     };
-
+    const cpuTurn = () => {
+        if (gameController.gameMode !== "vs" && activePlayer === Players.player2) {
+            console.log("CPU TURN");
+            setTimeout(() => {
+                Players.player2.turnCPU();
+            }, 600);
+            setTimeout(() => {
+                checkWinner(activePlayer)
+                changeActivePlayer();
+            }, 800);
+        }
+    };
     const drawScores = () => {
         p1Score.innerHTML = `${Players.player1.name}: <span id="p1score">${Players.player1.score}</span>`;
         p2Score.innerHTML = `${Players.player2.name}: <span id="p2score">${Players.player2.score}</span>`;
@@ -217,6 +226,7 @@ const gameController = (() => {
         gameBoard.resetGameCells();
         gameBoard.drawGameBoard();
         changeActivePlayer();
+        cpuTurn();
     };
 
     return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer };
@@ -261,6 +271,7 @@ const Interface = (() => {
             defaultClasses();
             p1Name.value ? Players.player1.name = p1Name.value : Players.player1.name = "Player 1";
             p2Name.value ? Players.player2.name = p2Name.value : Players.player2.name = "Player 2";
+            document.querySelector('#gamemode').checked === false ? gameController.gameMode = "vs" : gameController.gameMode = "ai";
         }
     });
     btnBackToMain.addEventListener('click', () => {
@@ -377,7 +388,6 @@ const Interface = (() => {
             selectedOption(e);
         });
     });
-
     return { marker1Div, color1Div, color2Div };
 })();
 
