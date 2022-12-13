@@ -59,18 +59,18 @@ const gameBoard = (() => {
 const Players = (() => {
     const pSBC = (p, c0, c1, l) => {
         let r, g, b, P, f, t, h, i = parseInt, m = Math.round, a = typeof (c1) == "string";
-        if (typeof (p) != "number" || p < -1 || p > 1 || typeof (c0) != "string" || (c0[0] != 'r' && c0[0] != '#') || (c1 && !a)) return null;
+        if (typeof (p) !== "number" || p < -1 || p > 1 || typeof (c0) !== "string" || (c0[0] !== 'r' && c0[0] !== '#') || (c1 && !a)) return null;
         if (!this.pSBCr) this.pSBCr = (d) => {
             let n = d.length, x = {};
             if (n > 9) {
                 [r, g, b, a] = d = d.split(","), n = d.length;
                 if (n < 3 || n > 4) return null;
-                x.r = i(r[3] == "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1;
+                x.r = i(r[3] === "a" ? r.slice(5) : r.slice(4)), x.g = i(g), x.b = i(b), x.a = a ? parseFloat(a) : -1;
             } else {
-                if (n == 8 || n == 6 || n < 4) return null;
+                if (n === 8 || n === 6 || n < 4) return null;
                 if (n < 6) d = "#" + d[1] + d[1] + d[2] + d[2] + d[3] + d[3] + (n > 4 ? d[4] + d[4] : "");
                 d = i(d.slice(1), 16);
-                if (n == 9 || n == 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
+                if (n === 9 || n === 5) x.r = d >> 24 & 255, x.g = d >> 16 & 255, x.b = d >> 8 & 255, x.a = m((d & 255) / 0.255) / 1000;
                 else x.r = d >> 16, x.g = d >> 8 & 255, x.b = d & 255, x.a = -1;
             } return x;
         };
@@ -110,8 +110,6 @@ const Players = (() => {
             setTimeout(() => {
                 gameBoard.gameCells[id].innerHTML = `<span class="marker">${this.marker}</span>`;
                 gameBoard.gameCells[id].classList.add('clicked');
-                // gameBoard.gameCells[id].style.color = this.color;
-                // gameBoard.gameCells[id].style.backgroundColor = pSBC(-0.35,this.color);
                 gameBoard.gameCells[id].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[id].style.backgroundColor = this.color;
             }, 200);
@@ -126,7 +124,6 @@ const Players = (() => {
                 }
             }
             let cpuCell = validMoves[Math.floor(Math.random() * validMoves.length)];
-            console.log(validMoves);
             gameBoard.gameCells[cpuCell].classList.add('flip-vertical-right');
             gameBoard.boards.playedBoard[cpuCell] = this.marker;
             setTimeout(() => {
@@ -139,7 +136,7 @@ const Players = (() => {
     }
     const player1 = new Player("Player 1", gameBoard.markersArray[0], gameBoard.colorsArray[0], 0);
     const player2 = new Player("Player 2", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
-    return { Player, player1, player2 };
+    return { Player, player1, player2, pSBC };
 })();
 
 //* game module
@@ -157,27 +154,41 @@ const gameController = (() => {
     const changeActivePlayer = () => {
         activePlayer === Players.player1 ? activePlayer = Players.player2 : activePlayer = Players.player1;
         message.innerText = `${activePlayer.name}, it's your turn`;
-        if (gameMode !== "vs") {
+        if (gameMode !== "vs" && !winnerDeclared) {
             setTimeout(() => {
+            console.log("CPU TURN 8");
+
                 turnCPU();
             }, 1000);
         }
-        console.log(remainingSpots);
     };
 
     const checkWinner = (player) => {
-        console.log("starting checkwinner");
-        gameBoard.boards.winningBoards.forEach((e) => {
+        gameBoard.boards.winningBoards.forEach((e, i, ar) => {
             if (gameBoard.boards.playedBoard[e[0]] === player.marker && gameBoard.boards.playedBoard[e[1]] === player.marker && gameBoard.boards.playedBoard[e[2]] === player.marker) {
-                endScreen.classList.remove('hidden');
-                winScreen.classList.remove('hidden');
-                winScreen.style.background = player.color;
-                winScreen.firstChild.innerText = `The winner is 
-                ${player.name}!`;
-                player.score++;
-                drawScores();
                 winnerDeclared = true;
-                changeActivePlayer();
+                setTimeout(() => {
+                    gameBoard.gameCells.forEach((e) => {
+                        e.style.opacity = 0.3;})
+                },500)
+                setTimeout(() => {
+                    e.forEach((x) => {
+                        gameBoard.gameCells[x].style.opacity = 1;
+                        gameBoard.gameCells[x].style.boxShadow = `inset 0 0 4px 3px ${Players.pSBC(-0.55, player.color)}`;
+                        gameBoard.gameCells[x].style.borderColor = Players.pSBC(-0.55, player.color);
+
+                    });
+                }, 500);
+                setTimeout(() => {
+                    endScreen.classList.remove('hidden');
+                    winScreen.classList.remove('hidden');
+                    winScreen.style.background = player.color;
+                    winScreen.firstChild.innerText = `The winner is 
+                    ${player.name}!`;
+                    player.score++;
+                    drawScores();
+                    changeActivePlayer();
+                }, 1200);
             }
         });
         if (remainingSpots === 0 && !winnerDeclared) {
@@ -191,24 +202,23 @@ const gameController = (() => {
     const gameTurn = (event) => {
         if (event.target.classList.contains('cell') && !winnerDeclared && !event.target.classList.contains('clicked')) {
             let id = event.target.dataset.id;
-            // if (gameController.gameMode === "vs") {
             activePlayer.turn(id);
             remainingSpots--;
             checkWinner(activePlayer);
             changeActivePlayer();
-            cpuTurn();
-            // }
+            if (!winnerDeclared) {
+                cpuTurn();
+            }
         }
     };
     const cpuTurn = () => {
-        if (gameController.gameMode !== "vs" && activePlayer === Players.player2) {
-            console.log("CPU TURN");
+        if (gameController.gameMode !== "vs" && activePlayer === Players.player2 && !winnerDeclared) {
             setTimeout(() => {
                 Players.player2.turnCPU();
                 remainingSpots--;
             }, 600);
             setTimeout(() => {
-                checkWinner(activePlayer)
+                checkWinner(activePlayer);
                 changeActivePlayer();
             }, 800);
         }
@@ -278,7 +288,7 @@ const Interface = (() => {
             gameController.changeActivePlayer();
             setTimeout(() => {
                 gameController.nextRound();
-            }, 1500)
+            }, 1500);
         }
     });
     btnBackToMain.addEventListener('click', () => {
