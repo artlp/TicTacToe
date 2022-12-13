@@ -287,6 +287,8 @@ const Interface = (() => {
         if (Players.player1.marker === Players.player2.marker) {
             alert("Select different markers!");
         } else {
+            gameController.clickProtection = false;
+            gameController.winnerDeclared = false;
             mainscreen.classList.remove('hideright');
             mainscreen.classList.add('showleft');
             settingsscreen.classList.remove('showright');
@@ -318,6 +320,7 @@ const Interface = (() => {
 
     resetScoreBtn.addEventListener('click', () => {
         gameController.winnerDeclared = false;
+        gameController.clickProtection = false;
         Players.player1.score = 0;
         Players.player2.score = 0;
         gameController.drawScores();
