@@ -105,6 +105,7 @@ const Players = (() => {
             this.score = score;
         }
         turn(id) {
+            gameController.clickProtection = true;
             gameBoard.gameCells[id].classList.add('flip-vertical-right');
             gameBoard.boards.playedBoard[id] = this.marker;
             setTimeout(() => {
@@ -113,10 +114,10 @@ const Players = (() => {
                 gameBoard.gameCells[id].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[id].style.backgroundColor = this.color;
             }, 200);
+
         };
 
         turnCPU() {
-
             let validMoves = [];
             for (let i = 0; i < 9; i++) {
                 if (gameBoard.boards.playedBoard[i] === undefined) {
@@ -132,7 +133,8 @@ const Players = (() => {
                 gameBoard.gameCells[cpuCell].style.color = pSBC(-0.55, this.color);
                 gameBoard.gameCells[cpuCell].style.backgroundColor = this.color;
             }, 200);
-        }
+            gameController.clickProtection = false;
+        };
     }
     const player1 = new Player("Player 1", gameBoard.markersArray[0], gameBoard.colorsArray[0], 0);
     const player2 = new Player("Player 2", gameBoard.markersArray[1], gameBoard.colorsArray[1], 0);
@@ -145,6 +147,7 @@ const gameController = (() => {
     let gameMode = "vs";
     let winnerDeclared = false;
     let remainingSpots = 9;
+    let clickProtection = false;
     const endScreen = document.querySelector('.endgame');
     const winScreen = document.querySelector('.win');
     const p1Score = document.querySelectorAll('.scores')[0];
@@ -156,21 +159,22 @@ const gameController = (() => {
         message.innerText = `${activePlayer.name}, it's your turn`;
         if (gameMode !== "vs" && !winnerDeclared) {
             setTimeout(() => {
-            console.log("CPU TURN 8");
-
                 turnCPU();
             }, 1000);
         }
+
     };
 
     const checkWinner = (player) => {
+        // clickProtection = true;
         gameBoard.boards.winningBoards.forEach((e, i, ar) => {
             if (gameBoard.boards.playedBoard[e[0]] === player.marker && gameBoard.boards.playedBoard[e[1]] === player.marker && gameBoard.boards.playedBoard[e[2]] === player.marker) {
                 winnerDeclared = true;
                 setTimeout(() => {
                     gameBoard.gameCells.forEach((e) => {
-                        e.style.opacity = 0.3;})
-                },500)
+                        e.style.opacity = 0.3;
+                    });
+                }, 500);
                 setTimeout(() => {
                     e.forEach((x) => {
                         gameBoard.gameCells[x].style.opacity = 1;
@@ -198,9 +202,14 @@ const gameController = (() => {
             winScreen.classList.remove('hidden');
             winnerDeclared = true;
         };
+        setTimeout(() => {
+            clickProtection = false;
+
+        }, 600);
     };
     const gameTurn = (event) => {
-        if (event.target.classList.contains('cell') && !winnerDeclared && !event.target.classList.contains('clicked')) {
+        if (event.target.classList.contains('cell') && !winnerDeclared && !event.target.classList.contains('clicked') && !clickProtection) {
+            clickProtection = true;
             let id = event.target.dataset.id;
             activePlayer.turn(id);
             remainingSpots--;
@@ -222,6 +231,7 @@ const gameController = (() => {
                 changeActivePlayer();
             }, 800);
         }
+
     };
     const drawScores = () => {
         p1Score.innerHTML = `${Players.player1.name}: <span id="p1score">${Players.player1.score}</span>`;
@@ -237,11 +247,12 @@ const gameController = (() => {
         winScreen.classList.add('hidden');
         gameBoard.resetGameCells();
         gameBoard.drawGameBoard();
+        clickProtection = false;
         changeActivePlayer();
         cpuTurn();
     };
 
-    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer, remainingSpots };
+    return { changeActivePlayer, gameTurn, endScreen, winScreen, nextRound, drawScores, winnerDeclared, activePlayer, clickProtection };
 })();
 
 //*settings and buttons module 
