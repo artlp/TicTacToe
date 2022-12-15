@@ -1,84 +1,103 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TicTacToe by artlp</title>
-        <link rel="stylesheet" href="./normalize.css">
-        <link rel="stylesheet" href="./style.css">
-        <script src="./script.js" defer></script>
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicTacToe by artlp</title>
+    <link rel="stylesheet" href="./normalize.css">
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js" defer></script>
+  </head>
 
-    <body>
-        <div class="wrapper">
-            <header>
-                <h1><span id="tic" class="bounce-top">TIC</span><span class="dash">-</span><span id="tac" class="bounce-top">TAC</span><span
-                        class="dash">-</span><span id="toe" class="bounce-top">TOE</span></h1>
-            </header>
-            <section class="mainscreen">
-                <ul class="mainmenu">
-                    <li id="playgame" class="btn_main">PLAY GAME</li>
-                    <li id="settings" class="btn_main">SETTINGS</li>
-                </ul>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1><span id="tic" class="bounce-top">TIC</span><span class="dash">-</span><span id="tac"
+            class="bounce-top">TAC</span><span class="dash">-</span><span id="toe" class="bounce-top">TOE</span></h1>
+      </header>
+      <section class="mainscreen">
+        <ul class="mainmenu">
+          <li id="playgame" class="btn_main">PLAY GAME</li>
+          <li id="settings" class="btn_main">SETTINGS</li>
+        </ul>
 
-            </section>
-            <footer>made by <a href="https://github.com/artlp/" target="_blank" >artlp</a></footer>
-            <div class="gameboard">
-                <div id="message"></div>
-                <div class="cell" data-id="0"></div>
-                <div class="cell" data-id="1"></div>
-                <div class="cell" data-id="2"></div>
-                <div class="cell" data-id="3"></div>
-                <div class="cell" data-id="4"></div>
-                <div class="cell" data-id="5"></div>
-                <div class="cell" data-id="6"></div>
-                <div class="cell" data-id="7"></div>
-                <div class="cell" data-id="8"></div>
-            </div>
-            <div class="gameboard-info">
-                <div class="scores"></div>
-                <button class="btn backtomain">Back to main menu</button>
-                <div class="scores"></div>
-            </div>
+      </section>
+      <footer>made by <a href="https://github.com/artlp/" target="_blank">artlp</a></footer>
+      <div class="gameboard">
+        <div id="message"></div>
+        <div class="cell" data-id="0"></div>
+        <div class="cell" data-id="1"></div>
+        <div class="cell" data-id="2"></div>
+        <div class="cell" data-id="3"></div>
+        <div class="cell" data-id="4"></div>
+        <div class="cell" data-id="5"></div>
+        <div class="cell" data-id="6"></div>
+        <div class="cell" data-id="7"></div>
+        <div class="cell" data-id="8"></div>
+      </div>
+      <div class="gameboard-info">
+        <div class="scores"></div>
+        <button class="btn backtomain">Back to main menu</button>
+        <div class="scores"></div>
+      </div>
 
-            <div class="settingsscreen">
-                <div class="flexdiv">Opponent:
+      <div class="settingsscreen">
+        <div class="flexdiv">Opponent:
 
-                    <label class="toggle">
-                        <input type="checkbox" id="gamemode" checked>
-                        <span class="slider"></span>
-                        <span class="labels" data-on="CPU" data-off="HUMAN"></span>
-                    </label>
+          <label class="toggle">
+            <input type="checkbox" id="gamemode" checked>
+            <span class="slider"></span>
+            <span class="labels" data-on="CPU" data-off="HUMAN"></span>
+          </label>
 
-                </div>
-                <div class="flexdiv2">
-                    <div class="flexdiv"><fieldset><label for="player1name">Player 1 Name</label><input type="text" name="player1name" id="player1name" placeholder="Player 1"></fieldset></div>
-                    <div class="flexdiv"><fieldset><label for="player2name">Player 2 Name</label><input type="text" name="player2name" id="player2name" placeholder="Player 2"></fieldset></div>
-                </div>
-                <div class="flexdiv2">
-                    <div class="flexdiv"><fieldset><label for="player1marker">Player 1 Marker</label>
-                        <div id="player1marker" class="markerdiv"></div>
-                    </fieldset>
-                    </div>
-                    <div class="flexdiv" id="player2markers"><fieldset><label for="player2marker">Player 2 Marker</label>
-                    </fieldset></div>
-                </div>
-                <div class="flexdiv2">
-                    <div class="flexdiv"><fieldset><label for="player1color">Player 1 Color</label><div id="player1color" class="colordiv"></div></fieldset></div>
-                    <div class="flexdiv" id="player2colors"><fieldset><label for="player2color">Player 2 Color</label></fieldset></div>
-                </div>
-                <div class="settingsbuttons"><button class="btn resetscore">Reset Score</button><button class="btn settingsaccept">Accept</button></div>
-
-            </div>
-            <div class="endgame hidden">
-                <div class="win hidden"><div class="endgame_message"></div><div class="endgame_button"><button class="btn nextround">PLAY ANOTHER ROUND</button></div></div>
-            </div>
         </div>
-        <!-- <div class="centerbg">
+        <div class="flexdiv2">
+          <div class="flexdiv">
+            <fieldset><label for="player1name">Player 1 Name</label><input type="text" name="player1name"
+                id="player1name" placeholder="Player 1"></fieldset>
+          </div>
+          <div class="flexdiv">
+            <fieldset><label for="player2name">Player 2 Name</label><input type="text" name="player2name"
+                id="player2name" placeholder="Player 2"></fieldset>
+          </div>
+        </div>
+        <div class="flexdiv2">
+          <div class="flexdiv">
+            <fieldset><label for="player1marker">Player 1 Marker</label>
+              <div id="player1marker" class="markerdiv"></div>
+            </fieldset>
+          </div>
+          <div class="flexdiv" id="player2markers">
+            <fieldset><label for="player2marker">Player 2 Marker</label>
+            </fieldset>
+          </div>
+        </div>
+        <div class="flexdiv2">
+          <div class="flexdiv">
+            <fieldset><label for="player1color">Player 1 Color</label>
+              <div id="player1color" class="colordiv"></div>
+            </fieldset>
+          </div>
+          <div class="flexdiv" id="player2colors">
+            <fieldset><label for="player2color">Player 2 Color</label></fieldset>
+          </div>
+        </div>
+        <div class="settingsbuttons"><button class="btn resetscore">Reset Score</button><button
+            class="btn settingsaccept">Accept</button></div>
+
+      </div>
+      <div class="endgame hidden">
+        <div class="win hidden">
+          <div class="endgame_message"></div>
+          <div class="endgame_button"><button class="btn nextround">PLAY ANOTHER ROUND</button></div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="centerbg">
             <div class="gradient"></div>
         </div> -->
-    </body>
+  </body>
 
 </html>

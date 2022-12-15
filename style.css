@@ -271,9 +271,9 @@ inset: 0;
 margin: 0;
 overflow-x:hidden;
 padding: 0;
+padding-top: 2%;
 position: absolute;
 z-index: 1;
-padding-top: 2%;
 }
 /* .gradient {
 -webkit-animation: rotate var(--speed) var(--easing) alternate infinite;
@@ -308,13 +308,14 @@ grid-row: 2/3;
 grid-template-columns: repeat(3, 1fr);
 grid-template-rows: repeat(3, 1fr);
 opacity: 0;
+position: relative;
 transform: translateX(100vw);
 width: clamp(300px, 65%, 540px);
-position: relative;
 z-index: 1;
 }
 .gameboard-info {
 align-items: center;
+align-self: flex-end;
 color: white;
 display: flex;
 flex-flow: row wrap;
@@ -324,7 +325,6 @@ justify-content: space-evenly;
 text-align: center;
 transform: translateX(200%);
 width: 100%;
-align-self: flex-end;
 }
 
 .cell {
@@ -369,9 +369,9 @@ grid-auto-rows: -webkit-max-content;
 grid-auto-rows: max-content;
 grid-template-columns: repeat(12, 1fr);
 grid-template-rows: 80px 100% 70px;
+height: 80%;
 justify-items: center;
 max-height: 100vh;
-height: 80%;
 }
 
 header {
@@ -380,11 +380,11 @@ grid-row: 1/2;
 }
 
 footer {
+align-self: end;
 color: white;
 cursor: default;
 grid-column: 1/13;
 grid-row: 3/4;
-align-self: end;
 }
 
 .mainscreen, .settingsscreen {
@@ -705,14 +705,14 @@ animation: jello-vertical 0.9s ease-in-out 2200ms both;
     width: 150px;
 }
 .scores span {
-display: block;
-font-weight: 1000;
-font-size: 1.5rem;
-cursor: default;
+  cursor: default;
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 1000;
 }
 
 input[type="text"] {
-    border: none;
-    border-radius: 4px;
-    outline: none;
+  border: none;
+  border-radius: 4px;
+  outline: none;
 }
