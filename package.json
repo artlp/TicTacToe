@@ -1,0 +1,24 @@
+{
+  "name": "tictactoe",
+  "version": "1.0.0",
+  "description": "Tic Tac Toe game on vanilla JS and module patterns",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artlp/TicTacToe.git"
+  },
+  "author": "Artur Lipskii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/artlp/TicTacToe/issues"
+  },
+  "homepage": "https://github.com/artlp/TicTacToe#readme",
+  "devDependencies": {
+    "eslint": "^8.29.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
+  }
+}
