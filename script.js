@@ -300,7 +300,7 @@ const gameController = (() => {
     if (remainingSpots === 0 && !winnerDeclared) {
       endScreen.classList.remove("hidden");
       winScreen.style.background = `linear-gradient(180deg, ${Players.player1.color} 0%, ${Players.player2.color} 100%)`;
-      winScreen.firstChild.innerText = `It's a draw!`;
+      winnerMessage.innerText = `It's a draw!`;
       winScreen.classList.remove("hidden");
       winnerDeclared = true;
     }
